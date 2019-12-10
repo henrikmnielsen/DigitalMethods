@@ -1,0 +1,18 @@
+install.packages("tidyverse")
+library(tidyverse)
+#I'll import my dataset from Statistics Denmark, which I have transformed from
+#a messy bunch of nonsense to nice clean data, using regex101. 
+interviews<-read_csv("DM2019/valgdata_clean.csv",na="NULL")
+
+#Testing the select and filter options, to see if my data is allright before I
+#continue my segemation of the votermigration data. 
+select(interviews,"2011_socialdemokratiet","2015_socialdemokratiet","2011_radikale_venstre","2015_radikale_venstre","2011_de_konservative","2015_de_konservative","2011_socialistisk_folkeparti","2015_socialistisk_folkeparti","2011_liberal_alliance","2015_liberal_alliance","2011_kristendemokraterne","2015_kristendemokraterne","2011_dansk_folkeparti","2015_dansk_folkeparti","2011_venstre","2015_venstre","2011_enhedslisten","2015_enhedslisten","2011_alternativet","2015_alternativet")
+filter(interviews,kommune=="Esbjerg") #The row "Esbjerg" is chosen as a example. 
+
+Southern_Denmark<-interviews %>% 
+  filter(kommune=="Billund"|kommune=="Esbjerg"|kommune=="Fanoe"|kommune=="Fredericia"|kommune=="Haderslev"|kommune=="Kolding"|kommune=="Soenderborg"|kommune=="Toender"|kommune=="Varde"|kommune=="Vejen"|kommune=="Vejle"|kommune=="Aabenraa")
+
+library(Hmisc)
+
+Election2011<-read_csv("DM2019/valgdata2011.csv",na="NULL")
+Election2015<-read_csv("DM2019/valgdata2015.csv",na="NULL")
