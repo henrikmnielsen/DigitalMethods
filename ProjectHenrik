@@ -1,18 +1,49 @@
 install.packages("tidyverse")
+#First installing tidyverse
+
 library(tidyverse)
 #I'll import my dataset from Statistics Denmark, which I have transformed from
 #a messy bunch of nonsense to nice clean data, using regex101. 
-interviews<-read_csv("DM2019/valgdata_clean.csv",na="NULL")
-
-#Testing the select and filter options, to see if my data is allright before I
-#continue my segemation of the votermigration data. 
-select(interviews,"2011_socialdemokratiet","2015_socialdemokratiet","2011_radikale_venstre","2015_radikale_venstre","2011_de_konservative","2015_de_konservative","2011_socialistisk_folkeparti","2015_socialistisk_folkeparti","2011_liberal_alliance","2015_liberal_alliance","2011_kristendemokraterne","2015_kristendemokraterne","2011_dansk_folkeparti","2015_dansk_folkeparti","2011_venstre","2015_venstre","2011_enhedslisten","2015_enhedslisten","2011_alternativet","2015_alternativet")
-filter(interviews,kommune=="Esbjerg") #The row "Esbjerg" is chosen as a example. 
-
-Southern_Denmark<-interviews %>% 
-  filter(kommune=="Billund"|kommune=="Esbjerg"|kommune=="Fanoe"|kommune=="Fredericia"|kommune=="Haderslev"|kommune=="Kolding"|kommune=="Soenderborg"|kommune=="Toender"|kommune=="Varde"|kommune=="Vejen"|kommune=="Vejle"|kommune=="Aabenraa")
 
 library(Hmisc)
 
-Election2011<-read_csv("DM2019/valgdata2011.csv",na="NULL")
-Election2015<-read_csv("DM2019/valgdata2015.csv",na="NULL")
+# I've importet the various csv-flies to (R), which are the dataset used for the visualization.
+# of the assignement 
+dansk_folkeparti2011<-read_csv("DM2019/df_2011.csv")
+dansk_folkeparti2015<-read_csv("DM2019/df_2015.csv")
+socialdemokratiet2011<-read_csv("DM2019/socdem_2011.csv")
+socialdemokratiet2015<-read_csv("DM2019/socdem_2015.csv")
+venstre_2011<-read_csv("DM2019/venstre_2011.csv")
+venstre_2015<-read_csv("DM2019/venstre_2015.csv")
+
+#Each of the six datasets contain the results of the elections from the twelve municipalities
+#in respectively 2011 and 2015.
+
+#I have installed the mapDK packages, which are required to make the maps.
+if(!require("devtools")) install.packages("devtools")
+devtools::install_github("sebastianbarfort/mapDK")
+
+install.packages("mapDK")
+library(mapDK)
+mapDK()
+
+#Each of the below entered values is creating a map based on the data from csv.-files made from
+#the dataset provided by Danmarks Statestik. 
+
+mapDK(values = "pct", id = "kommune", data = dansk_folkeparti2011)
+#Map 1: Danish Peoples Party in 2011
+
+mapDK(values = "pct", id = "kommune", data = dansk_folkeparti2015)
+#Map 2: Danish Peoples Party in 2015
+
+mapDK(values = "pct", id = "kommune", data = socialdemokratiet2011)
+#Map 3: Social Democratic Party in 2011
+
+mapDK(values = "pct", id = "kommune", data = socialdemokratiet2015)
+#Map 4: Social Democratic Party in 2015
+
+mapDK(values = "pct", id = "kommune", data = venstre_2011)
+#Map 5: Venstre in 2011
+
+mapDK(values = "pct", id = "kommune", data = venstre_2015)
+#Map 6: Venstre in 2015
